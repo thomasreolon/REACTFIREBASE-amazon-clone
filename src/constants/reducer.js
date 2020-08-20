@@ -7,10 +7,13 @@ function reducer(state, action) {
   switch (action.type) {
     case "ADD_TO_BASKET":
       // add stuffs to basket
-      break;
+      return {
+        ...state,
+        basket: [...state.basket, action.item],
+      };
     case "REMOVE_FROM_BASKET":
       //remove
-      break;
+      return { state };
     default:
       return state;
   }

@@ -38,7 +38,7 @@ function Basket(props) {
       <Block>
         <Img src="img/cart.png" />
         <Cart>Carrello</Cart>
-        <Number>{basket.length}</Number>
+        <Number>{basket?.length}</Number>
       </Block>
     </Link>
   );

@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import useStateValue from "../Session/StateProvider";
+import { useStateValue } from "../Session/StateProvider";
+
+const abbr = (instr) => {
+  const res = instr.length > 100 ? instr.substr(0, 100) + "..." : instr;
+  return res;
+};
 
 const Product = styled.div`
     z-index:2;
@@ -35,6 +40,10 @@ const Product = styled.div`
     & > button:hover{
         background: linear-gradient(#f0c14b, #f0c14b);
     }
+    @media (max-width: 700px) {
+      height: 30rem;
+      width: 50rem;
+    }
 
 }
 `;
@@ -51,25 +60,38 @@ const Info = styled.div`
   width: 100%;
 `;
 
-function Item({ id, title, price, rating, image, size }) {
+function Item({ id, title, price, rating, image }) {
+  const [{}, dispatch] = useStateValue();
+
+  const addToBasket = () => {
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: {
+        id,
+        title,
+        price,
+        rating,
+        image,
+      },
+    });
+  };
+
   return (
     <Product>
       <Info>
-        <p>{title}</p>
+        <p>{abbr(title)}</p>
         <Price>
           <small>€ </small>
           <strong>{price}</strong>
         </Price>
-        <StarContainer>
-          {Array(rating)
-            .fill()
-            .map((_) => (
-              <p>&#11088;</p>
-            ))}
+        <StarContainer key={id}>
+          {[...Array(rating)].map((_, i) => (
+            <p key={i}>&#11088;</p>
+          ))}
         </StarContainer>
       </Info>
       <img src={image} />
-      <button onClick="">Aggiungi al carrello</button>
+      <button onClick={addToBasket}>Aggiungi al carrello</button>
     </Product>
   );
 }
