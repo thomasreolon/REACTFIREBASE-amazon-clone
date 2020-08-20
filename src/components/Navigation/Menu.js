@@ -21,7 +21,7 @@ const Auth = () => {
 
   return (
     <List>
-      <NavLink top="Ciao," bottom={user} to={ROUTES.CHECKOUT} />
+      <NavLink top="Ciao," bottom={user.email} to={ROUTES.CHECKOUT} />
       <li>
         <SignOutButton />
       </li>

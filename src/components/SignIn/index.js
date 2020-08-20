@@ -1,83 +1,169 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { Component, useState } from "react";
+import { withRouter, useHistory } from "react-router-dom";
 
-import { SignUpLink } from "../SignUp";
-import { withFirebase } from "../Firebase";
-import * as ROUTES from "../../constants/routes";
+import { auth, db } from "../Session/Firebase";
+
+import styled from "styled-components";
+
+const Img = styled.img`
+  width: 6rem;
+  margin-bottom: 1.5rem;
+`;
+
+const WrapPage = styled.div`
+  width: 30rem;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3vh;
+`;
+
+const Form = styled.div`
+background-color:white;
+  width: 100%,
+  padding:10px;
+  border-radius: 0.3rem;
+`;
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <SignUpLink />
-  </div>
+  <WrapPage>
+    <Img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" />
+    <Form>
+      <h1>Accedi (non è amazon vero)</h1>
+      <hr />
+      <SignInForm />
+    </Form>
+  </WrapPage>
 );
 
-const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null,
-};
+function SignInFormBase(props) {
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-class SignInFormBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
-
-  onSubmit = (event) => {
-    const { email, password } = this.state;
-
-    this.props.firebase
-      .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
-      })
-      .catch((error) => {
-        this.setState({ error });
-      });
-
+  const login = (event) => {
     event.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth) => {
+        //go to homepage
+        history.push("/");
+      })
+      .catch((error) => alert(error.message));
   };
 
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+  const register = (event) => {
+    event.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        history.push("/");
+      })
+      .catch((e) => alert(e.message));
   };
 
-  render() {
-    const { email, password, error } = this.state;
+  document.body.style = "background: rgb(234,237,237);";
 
-    const isInvalid = password === "" || email === "";
+  const isInvalid = password === "" || email === "";
+  const error = null;
 
-    return (
-      <form onSubmit={this.onSubmit}>
+  return (
+    <div>
+      <form>
+        <p
+          style={{
+            fontWeight: "bold",
+            fontSize: "0.8rem",
+            textAlign: "left",
+            marginLeft: "8rem",
+          }}
+        >
+          E-mail
+        </p>
         <input
           name="email"
           value={email}
-          onChange={this.onChange}
+          onChange={(event) => setEmail(event.target.value)}
           type="text"
-          placeholder="Email Address"
+          placeholder=""
+          style={{ width: "14rem" }}
         />
+        <br />
+        <p
+          style={{
+            fontWeight: "bold",
+            fontSize: "0.8rem",
+            textAlign: "left",
+            marginLeft: "8rem",
+          }}
+        >
+          Password
+        </p>
         <input
           name="password"
           value={password}
-          onChange={this.onChange}
+          onChange={(event) => setPassword(event.target.value)}
           type="password"
-          placeholder="Password"
+          placeholder=""
+          style={{ width: "14rem" }}
         />
-        <button disabled={isInvalid} type="submit">
-          Sign In
+        <br />
+        <button
+          onClick={login}
+          disabled={isInvalid}
+          type="submit"
+          style={{
+            width: "14rem",
+            paddingTop: "5px",
+            paddingBottom: "5px",
+            borderRadius: "0.3rem",
+            background: "linear-gradient(#fada5f, #f0c14b)",
+            border: "1px solid black",
+            marginTop: "15px",
+            cursor: "pointer",
+          }}
+        >
+          Accedi
+        </button>
+        <p
+          style={{
+            color: "lightgray",
+            fontSize: "0.8rem",
+            width: "60%",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          Registrando un nuovo account acconsenti al trattamento dei tuoi dati
+          personali etc. etc.
+        </p>
+        <button
+          onClick={register}
+          disabled={isInvalid}
+          type="submit"
+          style={{
+            width: "14rem",
+            paddingTop: "5px",
+            paddingBottom: "5px",
+            borderRadius: "0.3rem",
+            background: "linear-gradient(whitesmoke, lightgrey)",
+            border: "1px solid black",
+            marginTop: "15px",
+            cursor: "pointer",
+            marginBottom: "10px",
+          }}
+        >
+          Registra un nuovo account
         </button>
 
         {error && <p>{error.message}</p>}
       </form>
-    );
-  }
+    </div>
+  );
 }
 
-const SignInForm = withRouter(withFirebase(SignInFormBase));
+const SignInForm = withRouter(SignInFormBase);
 
 export default SignInPage;
 

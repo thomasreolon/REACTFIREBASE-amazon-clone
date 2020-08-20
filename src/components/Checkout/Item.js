@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Line from "./Line";
+import { useStateValue } from "../Session/StateProvider";
 
 const Block = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const Info = styled.div`
   flex-direction: column;
   flex: 2;
   margin-left: 15px;
-  & > h3 {
+  & h3 {
     font-weight: bold;
     color: darkblue;
   }
@@ -41,14 +42,22 @@ const Info = styled.div`
 `;
 
 function Item({ title, price, id, image }) {
+  const [{}, dispatch] = useStateValue();
+  const removeFromBasket = () => {
+    dispatch({
+      type: "REMOVE_FROM_BASKET",
+      id: id,
+    });
+  };
   return (
     <div>
       <Block>
         <img src={image} />
         <Info>
           <h3>{title}</h3>
+          <h3>€{price}</h3>
           <p>Disponibilità: solo 1</p>
-          <button>Rimuovi dal Carrello</button>
+          <button onClick={removeFromBasket}>Rimuovi dal Carrello</button>
         </Info>
       </Block>
       <Line />

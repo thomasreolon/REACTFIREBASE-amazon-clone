@@ -11,9 +11,21 @@ function reducer(state, action) {
         ...state,
         basket: [...state.basket, action.item],
       };
+    case "SET_USER":
+      // add stuffs to basket
+      return {
+        ...state,
+        user: action.user,
+      };
     case "REMOVE_FROM_BASKET":
       //remove
-      return { state };
+      let newBasket = [...state.basket];
+      const index = state.basket.findIndex((bi) => bi.id === action.id);
+      if (index >= 0) {
+        newBasket.splice(index, 1);
+      }
+
+      return { ...state, basket: newBasket };
     default:
       return state;
   }
