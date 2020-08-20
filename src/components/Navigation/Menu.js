@@ -4,6 +4,7 @@ import styled from "styled-components";
 import * as ROUTES from "../../constants/routes";
 import NavLink from "./NavLink";
 import SignOutButton from "../SignOut";
+import { useStateValue } from "../Session/StateProvider";
 
 const List = styled.ul`
   display: flex;
@@ -15,20 +16,24 @@ const List = styled.ul`
 `;
 
 //------------------------------
-const Auth = () => (
-  <List>
-    <NavLink top="Ciao, ..." bottom="Account" to={ROUTES.ACCOUNT} />
-    <li>
-      <SignOutButton />
-    </li>
-  </List>
-);
+const Auth = () => {
+  const [{ user }, dispatch] = useStateValue();
+
+  return (
+    <List>
+      <NavLink top="Ciao," bottom={user} to={ROUTES.CHECKOUT} />
+      <li>
+        <SignOutButton />
+      </li>
+    </List>
+  );
+};
 
 const NonAuth = () => (
   <List>
     <NavLink top="Ciao, Accedi" bottom="Account" to={ROUTES.SIGN_IN} />
-    <NavLink top="Resi" bottom="e ordini" to={ROUTES.SIGN_IN} />
-    <NavLink top="Iscriviti a" bottom="Prime" to={ROUTES.SIGN_IN} />
+    <NavLink top="Resi" bottom="e ordini" to={ROUTES.CHECKOUT} />
+    <NavLink top="Iscriviti a" bottom="Prime" to={ROUTES.PRIME} />
   </List>
 );
 

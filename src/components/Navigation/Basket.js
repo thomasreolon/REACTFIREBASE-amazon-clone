@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useStateValue } from "../Session/StateProvider";
 
 const Block = styled.div`
   position: relative;
@@ -31,12 +32,15 @@ const Number = styled.p`
 `;
 
 function Basket(props) {
+  const [{ basket }, dispatch] = useStateValue();
   return (
-    <Block>
-      <Img src="img/cart.png" />
-      <Cart>Carrello</Cart>
-      <Number>0</Number>
-    </Block>
+    <Link to={props.to}>
+      <Block>
+        <Img src="img/cart.png" />
+        <Cart>Carrello</Cart>
+        <Number>{basket.length}</Number>
+      </Block>
+    </Link>
   );
 }
 
