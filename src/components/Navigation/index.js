@@ -7,8 +7,12 @@ import Logo from "./Logo";
 import Menu from "./Menu";
 import { useStateValue } from "../Session/StateProvider";
 
+import { useViewport, smallScreenSize } from "../../constants/responsive";
+
 function Navigation() {
+  const { width } = useViewport();
   const [{ user }, dispatch] = useStateValue();
+
   return (
     <nav
       style={{
@@ -21,7 +25,14 @@ function Navigation() {
       }}
     >
       {/* LOGO */}
-      <Logo to={ROUTES.HOME} src="img/ama_logo.svg" />
+      <Logo
+        to={ROUTES.HOME}
+        src={
+          width < smallScreenSize
+            ? "img/ama_logo_small.png"
+            : "img/ama_logo.svg"
+        }
+      />
 
       {/* SEARCH */}
       <SearchBar />

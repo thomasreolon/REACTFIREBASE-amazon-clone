@@ -8,6 +8,11 @@ body {
   background-color: rgb(234,237,237);
 }
 
+htlm, body, #root, .App {
+  height:100%;
+  width:100%;
+}
+
 * {
   margin: 0;
   box-sizing: border-box;
