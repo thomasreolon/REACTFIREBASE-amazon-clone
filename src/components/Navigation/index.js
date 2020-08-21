@@ -11,7 +11,7 @@ import { useViewport, smallScreenSize } from "../../constants/responsive";
 
 function Navigation() {
   const { width } = useViewport();
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
 
   return (
     <nav
@@ -21,6 +21,7 @@ function Navigation() {
         backgroundColor: "#131921",
         padding: "4px 0",
         position: "sticky",
+        top: "0",
         zIndex: "100",
       }}
     >
@@ -38,7 +39,13 @@ function Navigation() {
       <SearchBar />
 
       {/* LINKS */}
-      {user ? <Menu.Auth /> : <Menu.NonAuth />}
+      {width < smallScreenSize ? (
+        <div></div>
+      ) : user ? (
+        <Menu.Auth />
+      ) : (
+        <Menu.NonAuth />
+      )}
       <Basket to={ROUTES.CHECKOUT} />
     </nav>
   );

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../Session/StateProvider";
 
+import { useViewport, smallScreenSize } from "../../constants/responsive";
+
 const Block = styled.div`
   position: relative;
   margin-right: 20px;
@@ -32,12 +34,13 @@ const Number = styled.p`
 `;
 
 function Basket(props) {
+  const { width } = useViewport();
   const [{ basket }, dispatch] = useStateValue();
   return (
     <Link to={props.to}>
       <Block>
         <Img src="img/cart.png" />
-        <Cart>Carrello</Cart>
+        {width > smallScreenSize && <Cart>Carrello</Cart>}
         <Number>{basket?.length}</Number>
       </Block>
     </Link>

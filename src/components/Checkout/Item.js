@@ -8,8 +8,8 @@ const Block = styled.div`
   width: 50vw;
 
   & > img {
-    width: 20vw;
-    height: auto;
+    width: 40%;
+    height: 40%;
     border-radius: 0.2rem;
   }
 `;

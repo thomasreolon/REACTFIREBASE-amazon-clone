@@ -6,11 +6,16 @@ import Item from "./Item";
 import Line from "./Line";
 import { Link } from "react-router-dom";
 
+import { useViewport, smallScreenSize } from "../../constants/responsive";
+
 const PageWrapper = styled.div`
   margin: 10px;
   margin-left: 20px;
   & > div {
     display: flex;
+    @media (max-width: ${smallScreenSize}px) {
+      flex-direction: column;
+    }
   }
 `;
 
@@ -40,6 +45,9 @@ const Paycheck = styled.div`
   min-width: 23rem;
   background-color: rgb(234, 237, 237);
   border-radius: 0.4rem;
+  @media (max-width: ${smallScreenSize}px) {
+    min-width: 75%;
+  }
 `;
 const PaycheckInfo = styled.div`
   margin: 10px;
@@ -70,6 +78,7 @@ function Checkout(props) {
               total += parseFloat(item.price);
               return (
                 <Item
+                  key={item.id}
                   id={item.id}
                   title={item.title}
                   price={item.price}

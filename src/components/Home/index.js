@@ -4,17 +4,20 @@ import styled from "styled-components";
 import Banner from "./Banner";
 import Item from "./Item";
 
+import { smallScreenSize, useViewport } from "../../constants/responsive";
+
 const RowContainer = styled.div`
   padding: 1rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 `;
 
 const ItemsContainer = styled.div`
-  margin-top: -300px;
-  @media (max-width: 1200px) {
-    margin-top: -18vh;
+  margin-top: 0;
+  @media (max-width: ${smallScreenSize}px) {
+    margin-top: 0;
   }
 `;
 
@@ -26,6 +29,7 @@ const PageWrapper = styled.div`
 
 const HomePage = () => {
   document.body.style = "background: rgb(234,237,237);";
+  const { width } = useViewport();
 
   return (
     <PageWrapper>

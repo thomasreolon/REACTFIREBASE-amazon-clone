@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { useStateValue } from "../Session/StateProvider";
+import { smallScreenSize } from "../../constants/responsive";
 
 const abbr = (instr) => {
   const res = instr.length > 100 ? instr.substr(0, 100) + "..." : instr;
@@ -40,9 +41,8 @@ const Product = styled.div`
     & > button:hover{
         background: linear-gradient(#f0c14b, #f0c14b);
     }
-    @media (max-width: 700px) {
-      height: 30rem;
-      width: 50rem;
+    @media (max-width: ${smallScreenSize}px) {
+      min-width: 80vw;
     }
 
 }
