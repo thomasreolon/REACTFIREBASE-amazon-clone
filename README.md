@@ -2,11 +2,11 @@
 
 you can visit the hosted compiled website at the link below
 
-####[:globe_with_meridians: live demo](https://mern-stack-exercice.web.app/) (hosted by firebase)
+#### [:globe_with_meridians: live demo](https://mern-stack-exercice.web.app/) (hosted by firebase)
 
 ## Usage
 
-###Debug
+### Debug
 
 :zap: download the project
 
