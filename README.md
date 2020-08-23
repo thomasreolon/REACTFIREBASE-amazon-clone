@@ -15,5 +15,7 @@ you can visit the hosted compiled website at the link below
 :zap: start a server with a live demo on your computer (requires $npm$)
 
 > \$ cd REACTFIREBASE-amazon-clone
+
 > \$ npm install
+
 > \$ npm start
